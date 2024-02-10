@@ -5,11 +5,20 @@ type BudgetCardProps = {
   name: string
   amount: number
   max: number
+  isGray: boolean
 }
 
-const BudgetCard = ({ name, amount, max }: BudgetCardProps) => {
+const BudgetCard = ({ name, amount, max, isGray }: BudgetCardProps) => {
+  const classNames = []
+  const isDanger = amount > max
+  if (isDanger) {
+    classNames.push('bg-danger', 'bg-opacity-10')
+  } else if (isGray) {
+    classNames.push('bg-light')
+  }
+
   return (
-    <Card>
+    <Card className={classNames.join(' ')}>
       <Card.Body>
         <Card.Title className="d-flex justify-content-between align-items-baseline fw-normal mb-3">
           <div className="me-2">{name}</div>
