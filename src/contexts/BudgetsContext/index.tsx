@@ -1,9 +1,10 @@
 import { createContext, useContext } from 'react'
-import { Budget, Expense, Id, NewBudget, NewExpense } from '../model/data'
+import { Budget, Expense } from '../../model/data'
 import { v4 as uuidV4 } from 'uuid'
-import useLocaleStorage from '../hooks/useLocalStorage'
+import useLocaleStorage from '../../hooks/useLocalStorage'
+import { ContextType } from './types'
 
-const Context = createContext({})
+const Context = createContext({} as ContextType)
 
 export const useBudgets = () => {
   return useContext(Context)
@@ -12,15 +13,15 @@ export const useBudgets = () => {
 const BudgetsProvider = ({ children }: React.PropsWithChildren) => {
   const [budgets, setBudgets] = useLocaleStorage<Budget[]>('budgets', [])
   const [expenses, setExpenses] = useLocaleStorage<Expense[]>('expenses', [])
-  const getBudgetExpenses = (id: Id) => {
+  const getBudgetExpenses: ContextType['getBudgetExpenses'] = (id) => {
     return expenses.filter((expense) => expense.budgetId === id)
   }
-  const addExpense = (newExpense: NewExpense) => {
+  const addExpense: ContextType['addExpense'] = (newExpense) => {
     setExpenses((prevState) => {
       return [...prevState, { ...newExpense, id: uuidV4() }]
     })
   }
-  const addBudget = (newBudget: NewBudget) => {
+  const addBudget: ContextType['addBudget'] = (newBudget) => {
     setBudgets((prevState) => {
       const isExist = budgets.some((budget) => budget.name === newBudget.name)
       if (isExist) {
@@ -30,10 +31,10 @@ const BudgetsProvider = ({ children }: React.PropsWithChildren) => {
       }
     })
   }
-  const deleteBudget = (id: Id) => {
+  const deleteBudget: ContextType['deleteBudget'] = (id) => {
     setBudgets((prevState) => prevState.filter((budget) => budget.id !== id))
   }
-  const deleteExpense = (id: Id) => {
+  const deleteExpense: ContextType['deleteExpense'] = (id) => {
     setExpenses((prevState) => prevState.filter((expense) => expense.id !== id))
   }
 
