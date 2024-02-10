@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { JSONValue } from '../types'
 
-const useLocaleStorage = <T>(key: string, defaultValue: JSONValue) => {
+const useLocaleStorage = <T>(key: string, defaultValue: JSONValue): [T, React.Dispatch<React.SetStateAction<T>>] => {
   const [value, setValue] = useState<T>(() => {
     const localValue = localStorage.getItem(key)
 
