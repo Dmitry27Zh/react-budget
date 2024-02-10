@@ -3,10 +3,11 @@ import { Form, Modal, Button } from 'react-bootstrap'
 import { useBudgets } from '../contexts/BudgetsContext'
 
 type AddBudgetModalProps = {
+  show: boolean
   handleClose: () => void
 }
 
-const AddBudgetModal = ({ handleClose }: AddBudgetModalProps) => {
+const AddBudgetModal = ({ show, handleClose }: AddBudgetModalProps) => {
   const { addBudget } = useBudgets()
   const nameRef = useRef<HTMLInputElement>(null)
   const maxRef = useRef<HTMLInputElement>(null)
@@ -20,7 +21,7 @@ const AddBudgetModal = ({ handleClose }: AddBudgetModalProps) => {
   }
 
   return (
-    <Modal show onHide={handleClose}>
+    <Modal show={show} onHide={handleClose}>
       <Form onSubmit={handleSubmit}>
         <Modal.Header closeButton>
           <Modal.Title>New Budget</Modal.Title>
