@@ -1,6 +1,7 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext } from 'react'
 import { Budget, Expense, Id, NewBudget, NewExpense } from '../model/data'
 import { v4 as uuidV4 } from 'uuid'
+import useLocaleStorage from '../hooks/useLocalStorage'
 
 const Context = createContext({})
 
@@ -9,8 +10,8 @@ export const useBudgets = () => {
 }
 
 const BudgetsProvider = ({ children }: React.PropsWithChildren) => {
-  const [budgets, setBudgets] = useState<Budget[]>([])
-  const [expenses, setExpenses] = useState<Expense[]>([])
+  const [budgets, setBudgets] = useLocaleStorage<Budget[]>('budgets', [])
+  const [expenses, setExpenses] = useLocaleStorage<Expense[]>('expenses', [])
   const getBudgetExpenses = (id: Id) => {
     return expenses.filter((expense) => expense.budgetId === id)
   }

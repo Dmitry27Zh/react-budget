@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { JSONValue } from '../types'
 
-const useLocaleStorage = (key: string, defaultValue: JSONValue) => {
-  const [value, setValue] = useState(() => {
+const useLocaleStorage = <T>(key: string, defaultValue: JSONValue) => {
+  const [value, setValue] = useState<T>(() => {
     const localValue = localStorage.getItem(key)
 
     if (localValue) {
