@@ -1,17 +1,17 @@
 import { Card, ProgressBar, Stack, Button } from 'react-bootstrap'
 import { currencyFormatter } from '../utils'
 
-type BudgetCardProps = {
+export type BudgetCardProps = {
   name: string
   amount: number
-  max: number
+  max?: number
   isGray: boolean
   onAddExpenseClick: () => void
 }
 
 const BudgetCard = ({ name, amount, max, isGray, onAddExpenseClick }: BudgetCardProps) => {
   const classNames = []
-  const isDanger = amount > max
+  const isDanger = max && amount > max
   if (isDanger) {
     classNames.push('bg-danger', 'bg-opacity-10')
   } else if (isGray) {
@@ -25,16 +25,18 @@ const BudgetCard = ({ name, amount, max, isGray, onAddExpenseClick }: BudgetCard
           <div className="me-2">{name}</div>
           <div className="d-flex align-items-baseline">
             {currencyFormatter.format(amount)}
-            <span className="text-muted fs-6 ms-1">/ {currencyFormatter.format(max)}</span>
+            {max && <span className="text-muted fs-6 ms-1">/ {currencyFormatter.format(max)}</span>}
           </div>
         </Card.Title>
-        <ProgressBar
-          className="rounded-pill"
-          variant={getProgressBarVariant(amount, max)}
-          min={0}
-          max={max}
-          now={amount}
-        />
+        {max && (
+          <ProgressBar
+            className="rounded-pill"
+            variant={getProgressBarVariant(amount, max)}
+            min={0}
+            max={max}
+            now={amount}
+          />
+        )}
         <Stack className="mt-4" direction="horizontal" gap={2}>
           <Button className="ms-auto" variant="outline-primary" onClick={onAddExpenseClick}>
             Add Expense
