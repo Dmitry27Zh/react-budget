@@ -6,9 +6,10 @@ type BudgetCardProps = {
   amount: number
   max: number
   isGray: boolean
+  onAddExpenseClick: () => void
 }
 
-const BudgetCard = ({ name, amount, max, isGray }: BudgetCardProps) => {
+const BudgetCard = ({ name, amount, max, isGray, onAddExpenseClick }: BudgetCardProps) => {
   const classNames = []
   const isDanger = amount > max
   if (isDanger) {
@@ -35,7 +36,7 @@ const BudgetCard = ({ name, amount, max, isGray }: BudgetCardProps) => {
           now={amount}
         />
         <Stack className="mt-4" direction="horizontal" gap={2}>
-          <Button className="ms-auto" variant="outline-primary">
+          <Button className="ms-auto" variant="outline-primary" onClick={onAddExpenseClick}>
             Add Expense
           </Button>
           <Button variant="outline-secondary">View Expenses</Button>
