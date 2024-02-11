@@ -7,10 +7,19 @@ export type BudgetCardProps = {
   max?: number
   isGray: boolean
   onAddExpenseClick?: () => void
+  onViewExpensesClick?: () => void
   hideButtons?: boolean
 }
 
-const BudgetCard = ({ name, amount, max, isGray, onAddExpenseClick, hideButtons }: BudgetCardProps) => {
+const BudgetCard = ({
+  name,
+  amount,
+  max,
+  isGray,
+  onAddExpenseClick,
+  onViewExpensesClick,
+  hideButtons,
+}: BudgetCardProps) => {
   const classNames = []
   const isDanger = max && amount > max
   if (isDanger) {
@@ -43,7 +52,9 @@ const BudgetCard = ({ name, amount, max, isGray, onAddExpenseClick, hideButtons 
             <Button className="ms-auto" variant="outline-primary" onClick={onAddExpenseClick}>
               Add Expense
             </Button>
-            <Button variant="outline-secondary">View Expenses</Button>
+            <Button variant="outline-secondary" onClick={onViewExpensesClick}>
+              View Expenses
+            </Button>
           </Stack>
         )}
       </Card.Body>

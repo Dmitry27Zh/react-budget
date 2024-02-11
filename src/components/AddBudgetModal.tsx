@@ -17,6 +17,7 @@ const AddBudgetModal = ({ show, handleClose }: AddBudgetModalProps) => {
     const max = parseFloat(maxRef.current?.value ?? '')
     if (name && max) {
       addBudget({ name, max })
+      handleClose()
     }
   }
 

@@ -6,6 +6,8 @@ export type Budget = {
   max: number
 }
 
+export type UncategorizedBudget = Omit<Budget, 'max'>
+
 export type Expense = {
   id: Id
   budgetId: Id

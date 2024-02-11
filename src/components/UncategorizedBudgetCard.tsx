@@ -1,12 +1,12 @@
 import { useBudgets } from '../contexts/BudgetsContext'
-import { UNCATEGORIZED_BUDGET_ID } from '../contexts/BudgetsContext/const'
+import { UNCATEGORIZED_BUDGET } from '../contexts/BudgetsContext/const'
 import BudgetCard, { BudgetCardProps } from './BudgetCard'
 
 type UncategorizedBudgetCardProps = Omit<BudgetCardProps, 'amount' | 'name' | 'isGray'>
 
 const UncategorizedBudgetCard = (props: UncategorizedBudgetCardProps) => {
   const { getBudgetExpenses } = useBudgets()
-  const amount = getBudgetExpenses(UNCATEGORIZED_BUDGET_ID).reduce((total, expense) => total + expense.amount, 0)
+  const amount = getBudgetExpenses(UNCATEGORIZED_BUDGET.id).reduce((total, expense) => total + expense.amount, 0)
 
   if (amount === 0) {
     return null
