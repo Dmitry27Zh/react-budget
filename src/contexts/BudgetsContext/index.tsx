@@ -3,6 +3,7 @@ import { Budget, Expense } from '../../model/data'
 import { v4 as uuidV4 } from 'uuid'
 import useLocaleStorage from '../../hooks/useLocalStorage'
 import { ContextType } from './types'
+import { UNCATEGORIZED_BUDGET } from './const'
 
 const Context = createContext({} as ContextType)
 
@@ -33,6 +34,15 @@ const BudgetsProvider = ({ children }: React.PropsWithChildren) => {
   }
   const deleteBudget: ContextType['deleteBudget'] = (id) => {
     setBudgets((prevState) => prevState.filter((budget) => budget.id !== id))
+    setExpenses((prevState) => {
+      return prevState.map((expense) => {
+        if (expense.budgetId === id) {
+          return { ...expense, budgetId: UNCATEGORIZED_BUDGET.id }
+        } else {
+          return expense
+        }
+      })
+    })
   }
   const deleteExpense: ContextType['deleteExpense'] = (id) => {
     setExpenses((prevState) => prevState.filter((expense) => expense.id !== id))
